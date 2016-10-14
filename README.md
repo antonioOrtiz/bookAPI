@@ -1,0 +1,1 @@
+I'm learning how to create a lightweight Express server serving truly RESTful services using Node.js, Mongoose, and MongoDB. All the while spending time working through unit and end to end integration tests for the services it provides.
