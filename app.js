@@ -1,25 +1,34 @@
 var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
-    port = process.env.PORT || 8016;
+    port = process.env.PORT || 8016,
 
-var bookRouter = express.Router();
-
-bookRouter.route('/books')
-    .get(function (req, res) {
-        /* body... */
-        var responseJson = {hello: 'This is my api!'};
-        res.json(responseJson);
-    });
-
-
-app.use('/api', bookRouter);
+    db = mongoose.connect('mongodb://localhost/bookAPI'),
+    Book = require('./models/bookModel'),
+    bookRouter = express.Router();
 
 app.get('/', function rootHndlr(req, res) {
     /* body... */
     res.send('welcome to my API!');
 });
 
-app.listen(port, function listenHndlr(){
+app.use('/api', bookRouter);
+
+bookRouter.route('/books')
+    .get(function(req, res) {
+        /* body... */
+        Book.find(function(err, books) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                // statement;
+                res.json(books);
+            }
+        });
+    });
+
+
+
+app.listen(port, function listenHndlr() {
     console.log('Gulp is running my app on PORT ' + port);
 });
