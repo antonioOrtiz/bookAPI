@@ -1,20 +1,29 @@
 var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
     port = process.env.PORT || 8016,
 
     db = mongoose.connect('mongodb://localhost/bookAPI'),
     Book = require('./models/bookModel'),
     bookRouter = express.Router();
 
+app.use('/api', bookRouter);
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
 app.get('/', function rootHndlr(req, res) {
     /* body... */
     res.send('welcome to my API!');
 });
 
-app.use('/api', bookRouter);
 
 bookRouter.route('/books')
+    .post(function(req, res){
+        var book = new Book(req.body);
+        console.log(book);
+        res.send(book);
+    })
     .get(function(req, res) {
         /* body... */
         var query = {};
