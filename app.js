@@ -9,7 +9,7 @@ var express = require('express'),
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-var bookRouter = require('./routes/bookRoutes.js')(Book);
+var bookRouter = require('./routes/bookRoutes')(Book);
 
 
 app.get('/', function rootHndlr(req, res) {
@@ -17,7 +17,8 @@ app.get('/', function rootHndlr(req, res) {
     res.send('welcome to my API!');
 });
 
-app.use('/api', bookRouter);
+app.use('/api/books', bookRouter);
+// app.use('/api/authors', authorRouter);
 
 app.listen(port, function listenHndlr() {
     console.log('Gulp is running my app on PORT ' + port);
