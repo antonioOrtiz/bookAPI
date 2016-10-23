@@ -51,14 +51,45 @@ var express = require('express'),
                 req.book.author = req.body.author;
                 req.book.genre = req.body.genre;
                 req.book.read = req.body.read;
-                req.book.save();
-                res.json(req.book);
+                req.book.save(function(err) {
+                    /* body... */
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.json(req.book);
+
+                    }
+                });
             })
             .patch(function(req, res) {
                 for (var p in req.body) {
                     // statement
-                    req.body[p] = req.body[p];
+                    req.book[p] = req.body[p];
                 }
+                if (req.body._id) {
+                    delete req.body._id;
+                }
+                req.book.save(function(err) {
+                    /* body... */
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.json(req.book);
+
+                    }
+                });
+            })
+            .delete(function (req, res) {
+                /* body... */
+                req.book.remove(function(err) {
+                    /* body... */
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.status(204).send('Removed');
+
+                    }
+                });
             });
 
         return bookRouter;
