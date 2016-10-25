@@ -18,9 +18,9 @@ describe('Book Controller Tests', function() {
             var bookController = require('../controller/bookController')(Book);
 
             bookController.post(req,res);
-            
+
             res.status.calledWidth(400).should.equal(true, 'Bad Status' + res.status.args[0][0]);
-            res.send.calledWidth('Titke is required').should.equal(true);
+            res.send.calledWidth('Title is required').should.equal(true);
         });
     });
 });
