@@ -1,0 +1,26 @@
+var should = require('should'),
+    sinon = require('sinon');
+
+describe('Book Controller Tests', function() {
+    describe('Post', function() {
+        it('should not allow an empty title on post', function() {
+            var Book = function(book) { this.save = function() {} },
+
+                req = {
+                    body: {
+                        author: 'Antonio'
+                    }
+                },
+                res = {
+                    status: sinon.spy(),
+                    send: sinon.spy()
+                };
+            var bookController = require('../controller/bookController')(Book);
+
+            bookController.post(req,res);
+            
+            res.status.calledWidth(400).should.equal(true, 'Bad Status' + res.status.args[0][0]);
+            res.send.calledWidth('Titke is required').should.equal(true);
+        });
+    });
+});
