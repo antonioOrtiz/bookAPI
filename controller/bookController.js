@@ -4,7 +4,6 @@ var bookController = function bkCtrlHndlr(Book) {
             var book = new Book(req.body);
 
             book.save();
-
             res.status(201).send(book);
         },
         get = function(req, res) {
