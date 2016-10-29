@@ -15,12 +15,12 @@ describe('Book Controller Tests', function() {
                     status: sinon.spy(),
                     send: sinon.spy()
                 };
-            var bookController = require('../controller/bookController')(Book);
+            var bookController = require('../controllers/bookController')(Book);
 
             bookController.post(req,res);
+            res.status.calledWith(400).should.equal(true, 'Bad Status ' + res.status.args[0][0]);
+            res.send.calledWith('Title is required').should.equal(true);
 
-            res.status.calledWidth(400).should.equal(true, 'Bad Status' + res.status.args[0][0]);
-            res.send.calledWidth('Title is required').should.equal(true);
         });
     });
 });
