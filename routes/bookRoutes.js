@@ -1,7 +1,7 @@
 var express = require('express'),
 
     routes = function(Book) {
-        var bookController = require('../controller/bookController')(Book),
+        var bookController = require('../controllers/bookController')(Book),
             bookRouter = express.Router();
 
         /* body... */
@@ -25,7 +25,12 @@ var express = require('express'),
         bookRouter.route('/:bookId')
             .get(function(req, res) {
                 /* body... */
-                res.json(req.book);
+                var returnBook = req.book.toJSON();
+
+                returnBook.links = {};
+                var newLink= 'http://' + req.headers.host + '/api/books/?genre=' + returnBook.genre;
+                returnBook.links.FilterByThisGenre = newLink.replace(' ', '%20');
+                res.json(returnBook);
             })
             .put(function(req, res) {
                 // statement;
